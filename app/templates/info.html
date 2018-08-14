@@ -3,7 +3,7 @@
 {% block content %}
     <div class="jumbotron">
         <h1 class="display-4">SpotifyConnect</h1>
-        <p class="lead">This project connects your Spotify account to OpenHumans.</p>
+        <p class="lead">This connects your Spotify account to OpenHumans and recommends music to you based on a set of parameters</p>
         <hr class="my-4">
         <p>
             <a href="{% if request.user.is_authenticated %} {% url 'dashboard' %} {% else %} {% url 'authorize' %} {% endif %}">
