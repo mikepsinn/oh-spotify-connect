@@ -3,6 +3,7 @@ import arrow
 import ohapi
 import requests
 import urllib.parse
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect, reverse
@@ -123,9 +124,27 @@ def dashboard(request):
 
 def recommendations(request):
 
+    payload = {
+        'seed_genres': ','.join(request.POST.getlist('genres'))
+    }
 
+    for key, value in request.POST.items():
+        value = value.split(',')
+        if key.startswith('a_'):
+            payload['min_{}'.format(key[2:])] = value[0]
+            payload['max_{}'.format(key[2:])] = value[1]
 
-    pass
+    recommendations = requests.get(SPOTIFY_BASE_URL + '/recommendations', headers={
+        'Authorization': 'Bearer {}'.format(request.user.spotify_user.get_access_token())
+    }, params=payload).json()
+
+    if len(recommendations['tracks']) == 0:
+        messages.add_message(request, messages.WARNING, 'No tracks found for the selected parameters')
+        return redirect('dashboard')
+
+    return render(request, 'recommendations.html', context={
+        'recommendations': recommendations
+    })
 
 
 def log_out(request):
