@@ -58,10 +58,7 @@ def spotify_authorize(request):
     auth_endpoint = 'https://accounts.spotify.com/authorize?'
     scopes = [
         'streaming',
-        'user-read-email',
-        'user-read-private',
-        'playlist-modify-public',
-        'user-modify-playback-state'
+        'user-read-recently-played',
     ]
     auth_params = {
         'client_id': os.getenv('SPOTIFY_CLIENT_ID'),

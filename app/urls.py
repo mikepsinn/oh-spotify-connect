@@ -2,6 +2,7 @@ from django.conf import settings
 from django.urls import path, include
 
 from app import views
+from app.tasks import update_play_history
 
 urlpatterns = [
     path('admin/', include('admin.urls')),
@@ -11,6 +12,7 @@ urlpatterns = [
     path('spotify_authorize/', views.spotify_authorize, name='spotify_authorize'),
     path('spotify_authenticate/', views.spotify_authenticate, name='spotify_authenticate'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('debug/', update_play_history),
     path('recommendations/', views.recommendations, name='recommendations'),
     path('logout/', views.log_out, name='logout')
 ]
