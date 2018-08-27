@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect, reverse
 
 from app.decorators import member_required
 from app.models import OpenHumansMember, SpotifyUser
-
+from .tasks import update_play_history
 
 SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'
 
@@ -95,7 +95,7 @@ def spotify_authenticate(request):
             ).datetime
         }
     )
-
+    update_play_history.delay(request.user.oh_member.oh_id)
     return redirect('dashboard')
 
 
