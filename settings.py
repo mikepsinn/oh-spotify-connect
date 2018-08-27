@@ -23,10 +23,6 @@ INSTALLED_APPS = [
     'admin'
 ]
 
-if DEBUG:
-    INSTALLED_APPS += [
-        'debug_toolbar'
-    ]
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -39,10 +35,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if DEBUG:
-    MIDDLEWARE = [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ] + MIDDLEWARE
 
 TEMPLATES = [
     {
@@ -69,8 +61,14 @@ LOGIN_URL = '/authorize/'
 WSGI_APPLICATION = 'wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.parse(os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 

@@ -11,6 +11,8 @@ dj-database-url = "*"
 open-humans-api = "*"
 whitenoise = "*"
 celery = "*"
+gunicorn = "*"
+redis = "*"
 
 [dev-packages]
 ipython = "*"

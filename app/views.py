@@ -63,7 +63,7 @@ def spotify_authorize(request):
     auth_params = {
         'client_id': os.getenv('SPOTIFY_CLIENT_ID'),
         'redirect_uri': request.build_absolute_uri(reverse('spotify_authenticate')),
-        'scopes': ' '.join(scopes),
+        'scope': ' '.join(scopes),
         'response_type': 'code',
         'state': os.getenv('SECRET_KEY')
     }
