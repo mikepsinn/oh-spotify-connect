@@ -16,7 +16,3 @@ urlpatterns = [
     path('recommendations/', views.recommendations, name='recommendations'),
     path('logout/', views.log_out, name='logout')
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls)))
