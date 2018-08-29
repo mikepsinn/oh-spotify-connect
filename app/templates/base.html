@@ -19,7 +19,7 @@
 <div class="container-fluid mt-3">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-        <a class="navbar-brand" href="{% url 'info' %}">SpotifyConnect</a>
+        <a class="navbar-brand" href="{% url 'dashboard' %}">SpotifyConnect</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_content">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -32,6 +32,12 @@
                             Dashboard
                         </a>
                     </li>
+                    <a class="nav-link" href="{% url 'recommendations' %}">
+                        Recommendations
+                    </a>
+                    <a class="nav-link" href="{% url 'about' %}">
+                        FAQ
+                    </a>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
