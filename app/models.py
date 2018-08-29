@@ -4,6 +4,7 @@ import arrow
 import requests
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class OpenHumansMember(models.Model):
@@ -24,7 +25,7 @@ class OpenHumansMember(models.Model):
             client_id=os.getenv('OHAPI_CLIENT_ID'),
             client_secret=os.getenv('OHAPI_CLIENT_SECRET'),
             refresh_token=self.refresh_token,
-            redirect_uri='http://localhost:8000/authenticate'
+            redirect_uri=settings.OH_REDIRECT_URL
         )
         self.access_token = res['access_token']
         self.refresh_token = res['refresh_token']
