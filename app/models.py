@@ -29,7 +29,7 @@ class OpenHumansMember(models.Model):
         )
         self.access_token = res['access_token']
         self.refresh_token = res['refresh_token']
-        self.expiration_time: arrow.utcnow().shift(
+        self.expiration_time = arrow.utcnow().shift(
             seconds=res['expires_in']
         ).datetime
         self.save()
