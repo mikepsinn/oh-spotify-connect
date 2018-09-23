@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 
 <head>
@@ -6,19 +7,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
     <title>{% block title %}SpotifyConnect{% endblock %} - OpenHumans</title>
+
     <style>
         .footer {
             background-color: #f8f9fa;
             height: 60px;
         }
     </style>
+    <!-- Open Humans Theming -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/open-humans-theming.css' %}">
+
     {% block styles %} {% endblock %}
 </head>
 
 <body>
 <div class="container-fluid mt-3">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <nav class="navbar navbar-expand-lg navbar-default mb-3">
         <a class="navbar-brand" href="{% url 'dashboard' %}">SpotifyConnect</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav_content">
             <span class="navbar-toggler-icon"></span>
