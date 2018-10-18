@@ -16,7 +16,7 @@ def update_play_history(oh_member_id):
     print('updating data for {}'.format(oh_member_id))
     spotify_user = oh_member.user.spotify_user
 
-    spotify_archive = get_spotify_archive(oh_member)
+    spotify_archive, old_file_id = get_spotify_archive(oh_member)
     spotify_archive = extend_archive(spotify_archive, spotify_user)
     if spotify_archive:
         with tempfile.TemporaryFile() as f:
@@ -25,14 +25,15 @@ def update_play_history(oh_member_id):
             f.write(js)
             f.flush()
             f.seek(0)
-            ohapi.api.delete_file(
-                file_basename='spotify-listening-archive.json',
-                access_token=oh_member.get_access_token())
             ohapi.api.upload_stream(
                 f, "spotify-listening-archive.json", metadata={
                     "description": "Spotify Play History",
                     "tags": ["spotify"]
                     }, access_token=oh_member.get_access_token())
+            if old_file_id:
+                ohapi.api.delete_file(
+                    file_id=old_file_id,
+                    access_token=oh_member.get_access_token())
         print('updated data for {}'.format(oh_member_id))
 
 
@@ -42,8 +43,8 @@ def get_spotify_archive(oh_member):
     )['data']
     for f in files:
         if f['basename'] == 'spotify-listening-archive.json':
-            return requests.get(f['download_url']).json()
-    return []
+            return requests.get(f['download_url']).json(), f['id']
+    return [], ''
 
 
 def extend_archive(spotify_archive, spotify_user):
