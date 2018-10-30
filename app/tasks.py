@@ -6,6 +6,7 @@ from app.models import OpenHumansMember
 from celery import shared_task
 import os
 import datetime
+from .helpers import parse_timestamp
 
 SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'
 
@@ -50,8 +51,8 @@ def get_spotify_archive(oh_member):
 def extend_archive(spotify_archive, spotify_user):
     response = requests.get(
         SPOTIFY_BASE_URL + '/me/player/recently-played?limit=50', headers={
-        'Authorization': 'Bearer {}'.format(spotify_user.get_access_token())
-    })
+          'Authorization': 'Bearer {}'.format(spotify_user.get_access_token())
+          })
     if response.status_code == 429:
         update_play_history.apply_async(
                     args=[spotify_user.user.oh_member.oh_id],
@@ -61,12 +62,10 @@ def extend_archive(spotify_archive, spotify_user):
     if 'items' in recently_played.keys():
         recent_items = [i for i in reversed(recently_played['items'])]
         if spotify_archive:
-            last_timestamp = datetime.datetime.strptime(
-                                spotify_archive[-1]['played_at'],
-                                '%Y-%m-%dT%H:%M:%S.%fZ')
+            last_timestamp = parse_timestamp(
+                                spotify_archive[-1]['played_at'])
             for entry in recent_items:
-                played_at = datetime.datetime.strptime(
-                            entry['played_at'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                played_at = parse_timestamp(entry['played_at'])
                 if played_at > last_timestamp:
                     spotify_archive.append(entry)
             return spotify_archive
