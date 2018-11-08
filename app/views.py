@@ -43,7 +43,7 @@ def authenticate(request):
         access_token=res['access_token']
     )['project_member_id']
 
-    member = OpenHumansMember.objects.get_or_create(
+    member = OpenHumansMember.objects.update_or_create(
         user=User.objects.get_or_create(username=oh_id)[0],
         oh_id=oh_id,
         defaults={
@@ -92,7 +92,7 @@ def spotify_authenticate(request):
                             'client_secret': os.getenv('SPOTIFY_CLIENT_SECRET')
                         }).json()
 
-    SpotifyUser.objects.get_or_create(
+    SpotifyUser.objects.update_or_create(
         user=request.user,
         defaults={
             'access_token': res['access_token'],
