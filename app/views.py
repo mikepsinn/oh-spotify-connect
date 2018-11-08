@@ -112,11 +112,18 @@ def dashboard(request):
         spotify_user = request.user.spotify_user
     else:
         spotify_user = None
+    archive_url = get_download_url(request.user.oh_member)
+    if archive_url == 'token-broken':
+        logout(request)
+        messages.error(
+            request,
+            'Please re-authenticate this app by logging in again.')
+        return redirect('info')
     return render(
         request,
         'dashboard.html',
         {'spotify_user': spotify_user,
-         'archive_url': get_download_url(request.user.oh_member)})
+         'archive_url': archive_url})
 
 
 @member_required
