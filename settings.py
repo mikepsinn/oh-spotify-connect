@@ -14,6 +14,11 @@ INTERNAL_IPS = ['127.0.0.1']
 
 DEBUG = os.environ.get('DEBUG')
 
+# Check if running on Heroku. If so, force SSL.
+ON_HEROKU = os.getenv('ON_HEROKU', 'false').lower() == 'true'
+if ON_HEROKU:
+    SECURE_SSL_REDIRECT = True
+
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
