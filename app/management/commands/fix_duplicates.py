@@ -9,8 +9,8 @@ import json
 class Command(BaseCommand):
     help = 'Fix data files'
 
-    spotify_users = SpotifyUser.objects.all()
-    try:
+    def handle(self, *args, **options):
+        spotify_users = SpotifyUser.objects.all()
         for sp in spotify_users:
             # get all files for user
             oh_member = sp.user.oh_member
@@ -50,5 +50,3 @@ class Command(BaseCommand):
                 ohapi.api.delete_file(
                     file_id=fid,
                     access_token=oh_member.get_access_token())
-    except:
-        pass
