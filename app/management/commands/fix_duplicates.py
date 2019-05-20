@@ -12,7 +12,7 @@ class Command(BaseCommand):
     spotify_users = SpotifyUser.objects.all()
     for sp in spotify_users:
         # get all files for user
-        oh_member = sp.oh_member
+        oh_member = sp.user.oh_member
         files = ohapi.api.exchange_oauth2_member(
                 access_token=oh_member.get_access_token()
             )['data']
