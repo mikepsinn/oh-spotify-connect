@@ -32,7 +32,7 @@ class Command(BaseCommand):
         entries.sort()
         spotify_archive = []
         for i in entries:
-            spotify_archive.append(joined_data[entries])
+            spotify_archive.append(joined_data[i])
 
         with tempfile.TemporaryFile() as f:
             js = json.dumps(spotify_archive)
