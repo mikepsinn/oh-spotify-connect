@@ -23,8 +23,11 @@ class Command(BaseCommand):
             # read all files, key=fileid, value=json content
             for f in files:
                 if f['basename'] == 'spotify-listening-archive.json':
-                    json_data = requests.get(f['download_url']).json()
-                    parsed_files[f['id']] = json_data
+                    try:
+                        json_data = requests.get(f['download_url']).json()
+                        parsed_files[f['id']] = json_data
+                    except Exception:
+                        continue
             print('got all data')
             # merge entries into single dict, key=timestamp, value=full record
             joined_data = {}
