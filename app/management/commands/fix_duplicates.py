@@ -19,7 +19,6 @@ class Command(BaseCommand):
                 files = ohapi.api.exchange_oauth2_member(
                         access_token=oh_member.get_access_token()
                     )['data']
-                print(files)
                 if len(files) == 1:
                     continue
                 parsed_files = {}
