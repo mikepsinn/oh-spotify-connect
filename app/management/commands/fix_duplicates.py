@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 print('merged files')
 
                 with tempfile.TemporaryFile() as f:
-                    js = json.dumps(all_songs)
+                    js = json.dumps(all_songs_list)
                     js = str.encode(js)
                     f.write(js)
                     f.flush()

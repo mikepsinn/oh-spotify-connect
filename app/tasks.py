@@ -1,5 +1,6 @@
 import ohapi
 import json
+import ijson
 import tempfile
 import requests
 from app.models import OpenHumansMember
@@ -43,7 +44,16 @@ def get_spotify_archive(oh_member):
     )['data']
     for f in files:
         if f['basename'] == 'spotify-listening-archive.json':
-            return requests.get(f['download_url']).json(), f['id']
+            data = requests.get(f['download_url']).text
+            for_ijson = tempfile.NamedTemporaryFile(mode='w')
+            for_ijson.write(data)
+            for_ijson.flush()
+            json_data = ijson.items(open(for_ijson.name, 'r'), 'item')
+            all_songs = []
+            for element in json_data:
+                all_songs.append(element)
+
+            return all_songs, f['id']
     return [], ''
 
 
