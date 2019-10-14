@@ -5,15 +5,20 @@ This project allows users to connect their Spotify account to Open Humans and co
 To run the project from source:
 
 - Install python dependencies using [pipenv](https://github.com/pypa/pipenv#installation)
+
 ```
 pipenv install
 ```
+
 - Populate the environment variables listed in `env.sample` in `.env`
 - Apply migrations
+
 ```
 python manage.py migrate
 ```
+
 - Run server
+
 ```
 python manage.py runserver
 ```
