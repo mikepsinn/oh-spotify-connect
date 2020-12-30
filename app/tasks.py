@@ -95,7 +95,6 @@ def update_song_metadata(oh_member_id):
         spotify_archive,
         spotify_metadata)
     print('got all metadata')
-    print(spotify_metadata)
     if spotify_metadata:
         with tempfile.TemporaryFile() as f:
             js = json.dumps(spotify_metadata)
